@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.4/d3-queue.min.js"></script>
+    <style>
+        html, body, #vis {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="year">Please select a year: </label>
+        <label for="year">Please select a year: </label>
+        <input type="range" min=2009 max=2014 step=1 id="year" value=2014 oninput="selected_year.value = year.value">
+        <output name="selected_year" id="selected_year">2014</output>
+    </form>
+    <div id="vis">
+    </div>
+    <script src="./js/barChart.js"></script>
+</body>
+</html>

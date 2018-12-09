@@ -1,0 +1,16 @@
+crime_type,year,value
+homicide,2014,1000
+theft,2014,565
+assault,2014,1436
+stalking,2014,100
+arson,2014,565
+homicide,2015,1000
+theft,2015,5655
+assault,2015,14436
+stalking,2015,1070
+arson,2015,5657
+homicide,2016,1005
+theft,2016,5755
+assault,2016,1444
+stalking,2016,2070
+arson,2016,5656
