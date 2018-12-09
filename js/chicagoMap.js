@@ -74,6 +74,23 @@ map.on('load', function () {
     }
   });
 
+  // Crimes
+  map.addSource("crimes2011", {
+    "type": "geojson",
+    "data": "./data/crimes2011.geojson"
+  });
+
+  map.addLayer({
+    "id": "crimes2011",
+    "type": "symbol",
+    "source": "crimes2011",
+    'layout': {
+      'icon-image': 'marker-15',
+      'icon-size': 0.50,
+      'icon-allow-overlap': true,
+    }
+  });
+
   // When a click event occurs on a feature in the police stations layer, open a
   // popup at the location of the click, with description HTML from its properties.
   map.on('click', 'police-stations', function (e) {
@@ -93,7 +110,32 @@ map.on('load', function () {
     map.getCanvas().style.cursor = '';
   });
 
+
 });
+
+
+
+
+// var markerLayer = mapbox.markers.layer();
+// var interaction = mapbox.markers.interaction(markerLayer);
+// interaction.formatter(function(feature) {
+//   console.log(feature);
+//     var o = '<strong>' + feature.properties.Arrest + '</strong>';
+//     return o;
+// });
+// $.get("/data/mapbox_crimes.csv", function(data) {
+//   var crimes = $.csv.toObjects(data);
+//   $.each(crimes, function(i, crime) {
+//     var newfeature = {
+//         geometry: { coordinates: [crime.Longitude,crime.Latitude] },
+//         properties:  {
+//           title: crime.Arrest
+//         }
+//     };
+//     markerLayer.add_feature(newfeature);
+//     map.addLayer(markerLayer);
+//   });
+// });
 
 // Income legend
 // var incomeLegendEl = document.getElementById('income-legend');
