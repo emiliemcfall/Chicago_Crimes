@@ -570,37 +570,9 @@
     .enter().append("option")
     .text(d => d)
 
-    var hG={},    hGDim = {top: 60, right: 0, bottom: 70, left: 0};
-    hGDim.width = 500 - hGDim.left - hGDim.right,
-    hGDim.height = 300 - hGDim.top - hGDim.bottom;
-
-
     // BAR CHART CONTAINER AND STATIC PARAMETERS
-    //create svg for histogram.
-    var hGsvg = d3.select(dashboard).append("svg")
-    .attr("width", hGDim.width + hGDim.left + hGDim.right)
-    .attr("height", hGDim.height + hGDim.top + hGDim.bottom).append("g")
-    .attr("transform", "translate(" + hGDim.left + "," + hGDim.top + ")");
-
-    // Create function for x-axis map.
-    var x = d3.scaleBand().rangeRound([0, hGDim.width], 0.1);
-    // Create function for y-axis map.
-    var y = d3.scaleLinear().range([hGDim.height, 0]);
 
     // PIE CHART CONTAINER AND STATIC PARAMETERS
-    var pC ={},    pieDim ={width:250, height: 250};
-    pieDim.radius = Math.min(pieDim.width, pieDim.height) / 2;
-
-    // create svg for pie chart.
-    var piesvg = d3.select(dashboard).append("svg")
-    .attr("width", pieDim.width).attr("height", pieDim.height).append("g")
-    .attr("transform", "translate("+pieDim.width/2+","+pieDim.height/2+")");
-
-    // create function to draw the arcs of the pie slices.
-    var arc = d3.arc().outerRadius(pieDim.radius - 10).innerRadius(0);
-
-    // create a function to compute the pie slice angles.
-    var pie = d3.pie().sort(null).value(function(d) { return d.freq; });
 
     // LEGEND CONTAINER AND STATIC PARAMETERS
     // var leg = {};
@@ -611,8 +583,23 @@
 
     // function to handle histogram.
     function barChart(data){
-      // create function for x-axis mapping.
 
+      var hG={},    hGDim = {top: 60, right: 0, bottom: 70, left: 0};
+      hGDim.width = 500 - hGDim.left - hGDim.right,
+      hGDim.height = 300 - hGDim.top - hGDim.bottom;
+
+      //create svg for histogram.
+      var hGsvg = d3.select(dashboard).append("svg")
+      .attr("width", hGDim.width + hGDim.left + hGDim.right)
+      .attr("height", hGDim.height + hGDim.top + hGDim.bottom).append("g")
+      .attr("transform", "translate(" + hGDim.left + "," + hGDim.top + ")");
+
+      // Create function for x-axis map.
+      var x = d3.scaleBand().rangeRound([0, hGDim.width], 0.1);
+      // Create function for y-axis map.
+      var y = d3.scaleLinear().range([hGDim.height, 0]);
+
+      // create function for x-axis mapping.
       // .domain(data.map(function(d) { return d[0]; }));
       x.domain(data.map(function(d) { return d[0]; }));
 
@@ -692,6 +679,20 @@
 
     // function to handle pieChart.
     function pieChart(pD){
+
+      var pC ={},    pieDim ={width:250, height: 250};
+      pieDim.radius = Math.min(pieDim.width, pieDim.height) / 2;
+
+      // create svg for pie chart.
+      var piesvg = d3.select(dashboard).append("svg")
+      .attr("width", pieDim.width).attr("height", pieDim.height).append("g")
+      .attr("transform", "translate("+pieDim.width/2+","+pieDim.height/2+")");
+
+      // create function to draw the arcs of the pie slices.
+      var arc = d3.arc().outerRadius(pieDim.radius - 10).innerRadius(0);
+
+      // create a function to compute the pie slice angles.
+      var pie = d3.pie().sort(null).value(function(d) { return d.freq; });
 
       // Draw the pie slices.
       piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
@@ -850,6 +851,8 @@
         var slider = d3.select("#year")
         .style("border-radius", "1px")
         .on('change', function() {
+          // dashboard.remove();
+          console.log(this.value);
           var hG = barChart(getSF(this.value)); // create the histogram.
           pC = pieChart(getTF(this.value)); // create the pie-chart.
           leg = legend(getTF(this.value));  // create the legend.

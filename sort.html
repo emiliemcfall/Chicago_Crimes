@@ -486,6 +486,7 @@ function dashboard(id, json){
   var slider = d3.select("#year")
     .style("border-radius", "1px")
     .on('change', function() {
+      // dashboard.remove();
       var hG = barChart(getSF(this.value)); // create the histogram.
       pC = pieChart(getTF(this.value)); // create the pie-chart.
       leg = legend(getTF(this.value));  // create the legend.

@@ -12,7 +12,7 @@ function chart(csv) {
   var years = [...new Set(csv.map(d => d.year))];
   var crimes = [...new Set(csv.map(d => d.crime))];
   var values = [new Set(csv.map(d => d.value))];
-  console.log(values);
+  // console.log(values);
 
 	var options = d3.select("#year").selectAll("option")
 		.data(years)
