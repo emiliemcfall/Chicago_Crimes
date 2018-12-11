@@ -20,7 +20,9 @@ var svg = d3.select('#vis')
 width = width - margin.left - margin.right;
 height = height - margin.top - margin.bottom;
 
-var data = {};
+//var data = {};
+
+var sortDescending = false; //if true, bars are sorted by height in descending order
 
 var x_scale = d3.scaleBand()
 .rangeRound([0, width])
@@ -40,23 +42,12 @@ var x_axis = d3.axisBottom(x_scale);
 svg.append('g')
   .attr('class', 'x axis')
   .attr("transform", 'translate(0,' + height + ')');
-  // .call(x_axis)
-  // .selectAll("text")
-    // .attr("transform", function(d) {
-    //     return "rotate(-65)"
-    //   });
-    // .attr("transform", 'rotate(-90, ' + height + ')');
-  // .call(x_axis)
-  // .selectAll("text")
-  //   .style("text-anchor", "end")
-  //   // .attr("dx", "-.5em")
-  //   // .attr("dy", "-.9em")
-  //   .attr("transform", function(d) {
-  //       return "rotate(-65)"
-  //     });
 
 svg.append('g')
 .attr('class', 'y axis');
+
+d3.select("label")
+  .select("input")
 
 d3.csv("crimes-aggregated.csv", function(error, data) {
   // Filter according to year
@@ -66,6 +57,10 @@ d3.csv("crimes-aggregated.csv", function(error, data) {
     let csv_data = data.filter(function(d) {
       return ( d['year'] == year );
     });
+
+    if (sortDescending) {
+      csv_data.sort(function(a, b){ var sortKey = 'value'; return b[sortKey] - a[sortKey]; });
+    };
 
     var t = d3.transition()
     .duration(speed);
@@ -80,16 +75,11 @@ d3.csv("crimes-aggregated.csv", function(error, data) {
       return +d.value;
     });
 
+    // console.log(max_value);
+
     y_scale.domain([0, max_value]);
     colour_scale.domain([0, max_value]);
 
-
-    // if (sort) {
-    //   csv_data.sort(d3.select("#sort").property("checked")
-    //     ? (a, b) => b.value - a.value
-    //     : (a, b) => crime_types.indexOf(a.crime_type) - crime_types.indexOf(b.crime_type))
-    //     console.log(a)
-    // };
     var bars = svg.selectAll('.bar')
     .data(csv_data)
 
@@ -120,21 +110,6 @@ d3.csv("crimes-aggregated.csv", function(error, data) {
       return colour_scale(+d.value);
     })
 
-    // bars.enter()
-    //     .append("rect")
-    //     .attr("class", "bar")
-    //     .attr("fill", function(d){
-    //         if(d.gender === "female"){
-    //             return "#FDB462";
-    //         }else{
-    //             return "#B3DF68";
-    //         }
-    //     })
-    //     .attr("class", function(d) {
-    //         return d3.select(this).attr("class") + " " +  "m_" +
-    //             d.label.replace(/\s/g, "").replace("-","_");
-    //     })
-
     svg.select('.x.axis')
     .call(x_axis)
     .selectAll("text")
@@ -148,37 +123,34 @@ d3.csv("crimes-aggregated.csv", function(error, data) {
     svg.select('.y.axis')
     .transition(t)
     .call(y_axis);
-    //
-    //
-    // d3.select("#sort").on("change", sort);
-    // function sort() {
 
-    // };
   };
+
+  // d3.select("#sort").on("change", sort);
+  //   data.sort(function(a, b) {
+  //     return console.log(a["value"]-b["value"]);
+  //   });
 
   // Initiate
   var speed = 1500
   draw('2011', speed*1.25, false);
   //
   var slider = d3.select('#year');
+
   slider.on('change', function() {
     draw(this.value, speed);
-    // console.log(parseInt(this.value));
   });
 
-  // var checkbox = d3.select("#sort")
-  // 	.style("margin-left", "45%")
-  // 	.on("click", function() {
-  //     draw(this.value, speed);
-      // chart.update(select.property("value"), 750)
-  	// });
-});
+  var checkbox = d3.select('#sort');
+  checkbox.on('click', function () {
+    sortDescending = this.value;
+    draw(year.value, speed);
+  });
 
-// d3.queue()
-//     //.defer(d3.csv, 'crimes_arrest.csv')
-//     // .defer(d3.csv, 'monthly_data_2013.csv'), , d2013
-//     .await(function(error, d2014) {
-//         // data['2013'] = d2013;
-//         data['2014'] = d2014;
-//         draw('2014');
-//     });
+  //console.log(year.value);
+
+  ;
+
+
+
+});

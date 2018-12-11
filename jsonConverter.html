@@ -1,0 +1,700 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+var crimes = [
+{
+  "crime": "ARSON",
+  "year": 2008,
+  "arrest": 1286,
+  "no_arrest": 1286
+},
+{
+  "crime": "ARSON",
+  "year": 2009,
+  "arrest": 1224,
+  "no_arrest": 1286
+},
+{
+  "crime": "ARSON",
+  "year": 2010,
+  "arrest": 1010,
+  "no_arrest": 1286
+},
+{
+  "crime": "ARSON",
+  "year": 2011,
+  "arrest": 506,
+  "no_arrest": 1286
+},
+{
+  "crime": "ASSAULT",
+  "year": 2008,
+  "arrest": 50543,
+  "no_arrest": 1286
+},
+{
+  "crime": "ASSAULT",
+  "year": 2009,
+  "arrest": 45232,
+  "no_arrest": 1286
+},
+{
+  "crime": "ASSAULT",
+  "year": 2010,
+  "arrest": 41098,
+  "no_arrest": 1286
+},
+{
+  "crime": "ASSAULT",
+  "year": 2011,
+  "arrest": 20444,
+  "no_arrest": 1286
+},
+{
+  "crime": "BATTERY",
+  "year": 2008,
+  "arrest": 150918,
+  "no_arrest": 1286
+},
+{
+  "crime": "BATTERY",
+  "year": 2009,
+  "arrest": 135535,
+  "no_arrest": 1286
+},
+{
+  "crime": "BATTERY",
+  "year": 2010,
+  "arrest": 124407,
+  "no_arrest": 1286
+},
+{
+  "crime": "BATTERY",
+  "year": 2011,
+  "arrest": 60516,
+  "no_arrest": 1286
+},
+{
+  "crime": "BURGLARY",
+  "year": 2008,
+  "arrest": 52022,
+  "no_arrest": 1286
+},
+{
+  "crime": "BURGLARY",
+  "year": 2009,
+  "arrest": 52985,
+  "no_arrest": 1286
+},
+{
+  "crime": "BURGLARY",
+  "year": 2010,
+  "arrest": 49500,
+  "no_arrest": 1286
+},
+{
+  "crime": "BURGLARY",
+  "year": 2011,
+  "arrest": 26616,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIM SEXUAL ASSAULT",
+  "year": 2008,
+  "arrest": 2819,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIM SEXUAL ASSAULT",
+  "year": 2009,
+  "arrest": 2600,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIM SEXUAL ASSAULT",
+  "year": 2010,
+  "arrest": 2387,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIM SEXUAL ASSAULT",
+  "year": 2011,
+  "arrest": 1426,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL DAMAGE",
+  "year": 2008,
+  "arrest": 104402,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL DAMAGE",
+  "year": 2009,
+  "arrest": 94506,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL DAMAGE",
+  "year": 2010,
+  "arrest": 77450,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL DAMAGE",
+  "year": 2011,
+  "arrest": 37326,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL TRESPASS",
+  "year": 2008,
+  "arrest": 24442,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL TRESPASS",
+  "year": 2009,
+  "arrest": 21494,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL TRESPASS",
+  "year": 2010,
+  "arrest": 17913,
+  "no_arrest": 1286
+},
+{
+  "crime": "CRIMINAL TRESPASS",
+  "year": 2011,
+  "arrest": 8657,
+  "no_arrest": 1286
+},
+{
+  "crime": "DECEPTIVE PRACTICE",
+  "year": 2008,
+  "arrest": 28562,
+  "no_arrest": 1286
+},
+{
+  "crime": "DECEPTIVE PRACTICE",
+  "year": 2009,
+  "arrest": 26557,
+  "no_arrest": 1286
+},
+{
+  "crime": "DECEPTIVE PRACTICE",
+  "year": 2010,
+  "arrest": 22335,
+  "no_arrest": 1286
+},
+{
+  "crime": "DECEPTIVE PRACTICE",
+  "year": 2011,
+  "arrest": 12108,
+  "no_arrest": 1286
+},
+{
+  "crime": "GAMBLING",
+  "year": 2008,
+  "arrest": 2356,
+  "no_arrest": 1286
+},
+{
+  "crime": "GAMBLING",
+  "year": 2009,
+  "arrest": 1926,
+  "no_arrest": 1286
+},
+{
+  "crime": "GAMBLING",
+  "year": 2010,
+  "arrest": 1832,
+  "no_arrest": 1286
+},
+{
+  "crime": "GAMBLING",
+  "year": 2011,
+  "arrest": 736,
+  "no_arrest": 1286
+},
+{
+  "crime": "HOMICIDE",
+  "year": 2008,
+  "arrest": 513,
+  "no_arrest": 1286
+},
+{
+  "crime": "HOMICIDE",
+  "year": 2009,
+  "arrest": 460,
+  "no_arrest": 1286
+},
+{
+  "crime": "HOMICIDE",
+  "year": 2010,
+  "arrest": 438,
+  "no_arrest": 1286
+},
+{
+  "crime": "HOMICIDE",
+  "year": 2011,
+  "arrest": 437,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+  "year": 2008,
+  "arrest": 1148,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+  "year": 2009,
+  "arrest": 1126,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+  "year": 2010,
+  "arrest": 1519,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+  "year": 2011,
+  "arrest": 1048,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTIMIDATION",
+  "year": 2008,
+  "arrest": 516,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTIMIDATION",
+  "year": 2009,
+  "arrest": 456,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTIMIDATION",
+  "year": 2010,
+  "arrest": 380,
+  "no_arrest": 1286
+},
+{
+  "crime": "INTIMIDATION",
+  "year": 2011,
+  "arrest": 170,
+  "no_arrest": 1286
+},
+{
+  "crime": "KIDNAPPING",
+  "year": 2008,
+  "arrest": 714,
+  "no_arrest": 1286
+},
+{
+  "crime": "KIDNAPPING",
+  "year": 2009,
+  "arrest": 580,
+  "no_arrest": 1286
+},
+{
+  "crime": "KIDNAPPING",
+  "year": 2010,
+  "arrest": 602,
+  "no_arrest": 1286
+},
+{
+  "crime": "KIDNAPPING",
+  "year": 2011,
+  "arrest": 265,
+  "no_arrest": 1286
+},
+{
+  "crime": "LIQUOR LAW VIOLATION",
+  "year": 2008,
+  "arrest": 1798,
+  "no_arrest": 1286
+},
+{
+  "crime": "LIQUOR LAW VIOLATION",
+  "year": 2009,
+  "arrest": 1470,
+  "no_arrest": 1286
+},
+{
+  "crime": "LIQUOR LAW VIOLATION",
+  "year": 2010,
+  "arrest": 1422,
+  "no_arrest": 1286
+},
+{
+  "crime": "LIQUOR LAW VIOLATION",
+  "year": 2011,
+  "arrest": 619,
+  "no_arrest": 1286
+},
+{
+  "crime": "MOTOR VEHICLE THEFT",
+  "year": 2008,
+  "arrest": 37251,
+  "no_arrest": 1286
+},
+{
+  "crime": "MOTOR VEHICLE THEFT",
+  "year": 2009,
+  "arrest": 30626,
+  "no_arrest": 1286
+},
+{
+  "crime": "MOTOR VEHICLE THEFT",
+  "year": 2010,
+  "arrest": 35282,
+  "no_arrest": 1286
+},
+{
+  "crime": "MOTOR VEHICLE THEFT",
+  "year": 2011,
+  "arrest": 19381,
+  "no_arrest": 1286
+},
+{
+  "crime": "NARCOTICS",
+  "year": 2008,
+  "arrest": 90130,
+  "no_arrest": 1286
+},
+{
+  "crime": "NARCOTICS",
+  "year": 2009,
+  "arrest": 84316,
+  "no_arrest": 1286
+},
+{
+  "crime": "NARCOTICS",
+  "year": 2010,
+  "arrest": 82572,
+  "no_arrest": 1286
+},
+{
+  "crime": "NARCOTICS",
+  "year": 2011,
+  "arrest": 38568,
+  "no_arrest": 1286
+},
+{
+  "crime": "OBSCENITY",
+  "year": 2008,
+  "arrest": 24,
+  "no_arrest": 1286
+},
+{
+  "crime": "OBSCENITY",
+  "year": 2009,
+  "arrest": 40,
+  "no_arrest": 1286
+},
+{
+  "crime": "OBSCENITY",
+  "year": 2010,
+  "arrest": 61,
+  "no_arrest": 1286
+},
+{
+  "crime": "OBSCENITY",
+  "year": 2011,
+  "arrest": 40,
+  "no_arrest": 1286
+},
+{
+  "crime": "OFFENSE INVOLVING CHILDREN",
+  "year": 2008,
+  "arrest": 4861,
+  "no_arrest": 1286
+},
+{
+  "crime": "OFFENSE INVOLVING CHILDREN",
+  "year": 2009,
+  "arrest": 4772,
+  "no_arrest": 1286
+},
+{
+  "crime": "OFFENSE INVOLVING CHILDREN",
+  "year": 2010,
+  "arrest": 4507,
+  "no_arrest": 1286
+},
+{
+  "crime": "OFFENSE INVOLVING CHILDREN",
+  "year": 2011,
+  "arrest": 2257,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER NARCOTIC VIOLATION",
+  "year": 2008,
+  "arrest": 24,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER NARCOTIC VIOLATION",
+  "year": 2009,
+  "arrest": 14,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER NARCOTIC VIOLATION",
+  "year": 2010,
+  "arrest": 11,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER NARCOTIC VIOLATION",
+  "year": 2011,
+  "arrest": 5,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER OFFENSE",
+  "year": 2008,
+  "arrest": 52234,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER OFFENSE",
+  "year": 2009,
+  "arrest": 50493,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER OFFENSE",
+  "year": 2010,
+  "arrest": 41456,
+  "no_arrest": 1286
+},
+{
+  "crime": "OTHER OFFENSE",
+  "year": 2011,
+  "arrest": 20168,
+  "no_arrest": 1286
+},
+{
+  "crime": "PROSTITUTION",
+  "year": 2008,
+  "arrest": 10178,
+  "no_arrest": 1286
+},
+{
+  "crime": "PROSTITUTION",
+  "year": 2009,
+  "arrest": 7800,
+  "no_arrest": 1286
+},
+{
+  "crime": "PROSTITUTION",
+  "year": 2010,
+  "arrest": 4643,
+  "no_arrest": 1286
+},
+{
+  "crime": "PROSTITUTION",
+  "year": 2011,
+  "arrest": 2424,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC INDECENCY",
+  "year": 2008,
+  "arrest": 8,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC INDECENCY",
+  "year": 2009,
+  "arrest": 20,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC INDECENCY",
+  "year": 2010,
+  "arrest": 13,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC INDECENCY",
+  "year": 2011,
+  "arrest": 13,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC PEACE VIOLATION",
+  "year": 2008,
+  "arrest": 5986,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC PEACE VIOLATION",
+  "year": 2009,
+  "arrest": 6243,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC PEACE VIOLATION",
+  "year": 2010,
+  "arrest": 6810,
+  "no_arrest": 1286
+},
+{
+  "crime": "PUBLIC PEACE VIOLATION",
+  "year": 2011,
+  "arrest": 3095,
+  "no_arrest": 1286
+},
+{
+  "crime": "ROBBERY",
+  "year": 2008,
+  "arrest": 33180,
+  "no_arrest": 1286
+},
+{
+  "crime": "ROBBERY",
+  "year": 2009,
+  "arrest": 31691,
+  "no_arrest": 1286
+},
+{
+  "crime": "ROBBERY",
+  "year": 2010,
+  "arrest": 26832,
+  "no_arrest": 1286
+},
+{
+  "crime": "ROBBERY",
+  "year": 2011,
+  "arrest": 13980,
+  "no_arrest": 1286
+},
+{
+  "crime": "SEX OFFENSE",
+  "year": 2008,
+  "arrest": 2778,
+  "no_arrest": 1286
+},
+{
+  "crime": "SEX OFFENSE",
+  "year": 2009,
+  "arrest": 2330,
+  "no_arrest": 1286
+},
+{
+  "crime": "SEX OFFENSE",
+  "year": 2010,
+  "arrest": 2011,
+  "no_arrest": 1286
+},
+{
+  "crime": "SEX OFFENSE",
+  "year": 2011,
+  "arrest": 1046,
+  "no_arrest": 1286
+},
+{
+  "crime": "STALKING",
+  "year": 2008,
+  "arrest": 370,
+  "no_arrest": 1286
+},
+{
+  "crime": "STALKING",
+  "year": 2009,
+  "arrest": 324,
+  "no_arrest": 1286
+},
+{
+  "crime": "STALKING",
+  "year": 2010,
+  "arrest": 342,
+  "no_arrest": 1286
+},
+{
+  "crime": "STALKING",
+  "year": 2011,
+  "arrest": 181,
+  "no_arrest": 1286
+},
+{
+  "crime": "THEFT",
+  "year": 2008,
+  "arrest": 172810,
+  "no_arrest": 1286
+},
+{
+  "crime": "THEFT",
+  "year": 2009,
+  "arrest": 158609,
+  "no_arrest": 1286
+},
+{
+  "crime": "THEFT",
+  "year": 2010,
+  "arrest": 143923,
+  "no_arrest": 1286
+},
+{
+  "crime": "THEFT",
+  "year": 2011,
+  "arrest": 75174,
+  "no_arrest": 1286
+},
+{
+  "crime": "WEAPONS VIOLATION",
+  "year": 2008,
+  "arrest": 7652,
+  "no_arrest": 1286
+},
+{
+  "crime": "WEAPONS VIOLATION",
+  "year": 2009,
+  "arrest": 8158,
+  "no_arrest": 1286
+},
+{
+  "crime": "WEAPONS VIOLATION",
+  "year": 2010,
+  "arrest": 7114,
+  "no_arrest": 1286
+},
+{
+  "crime": "WEAPONS VIOLATION",
+  "year": 2011,
+  "arrest": 3877,
+  "no_arrest": 1286
+}
+];
+
+function convert(arr) {
+    return $.map(unique(arr), function(crime, year){
+        return {
+            crime: crime,
+            year: year,
+            freq: $.grep(arr, function(item){
+                return item.crime == crime;
+            })
+        }
+    });
+}
+
+function unique(arr) {
+    var result = [];
+    $.map(arr, function(item){
+        if ($.inArray(item.crime, result))
+            result.push(item.crime);
+    })
+    return result;
+}
+
+console.log(convert(crimes));
+</script>

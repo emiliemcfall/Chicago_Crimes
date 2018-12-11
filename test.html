@@ -1,26 +1,865 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.4/d3-queue.min.js"></script>
-    <style>
-        html, body, #vis {
-            height: 100%;
-            margin: 0;
-        }
-    </style>
-</head>
+<meta charset="utf-8">
+<style>
+  body{
+    width:1060px;
+    margin:50px auto;
+  }
+  path {  stroke: #fff; }
+  path:hover {  opacity:0.9; }
+  rect:hover {  fill:blue; }
+  .axis {  font: 10px sans-serif; }
+  .legend tr{    border-bottom:1px solid grey; }
+  .legend tr:first-child{    border-top:1px solid grey; }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {  display: none; }
+  .legend{
+    margin-bottom:76px;
+    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0px;
+  }
+  .legend td{
+    padding:4px 5px;
+    vertical-align:bottom;
+  }
+  .legendFreq, .legendPerc{
+    align:right;
+    width:50px;
+  }
+
+</style>
 <body>
-    <form>
-        <label for="year">Please select a year: </label>
-        <label for="year">Please select a year: </label>
-        <input type="range" min=2009 max=2014 step=1 id="year" value=2014 oninput="selected_year.value = year.value">
-        <output name="selected_year" id="selected_year">2014</output>
-    </form>
-    <div id="vis">
-    </div>
-    <script src="./js/barChart.js"></script>
-</body>
-</html>
+  <form>
+    <label for="year">Choose year: </label>
+    <input type="range" min=2008 max=2011 step=1 id="year" value=2011 oninput="selected_year.value = year.value">
+    <output name="selected_year" id="selected_year">2011</output>
+  </form>
+  <form>
+    <input type="checkbox" id="sort" display='block'>Toggle sort
+  </form>
+  <div id='dashboard'>
+  </div>
+  <script src="http://d3js.org/d3.v5.min.js"></script>
+  <script>
+    var crimes=[
+    {
+      crime: "ARSON",
+      year: 2008,
+      arrest: 1286,
+      no_arrest: 249,
+      freq:{arrest:1286, no_arrest:249}
+    }
+    ,{
+      crime: "RAPE",
+      year: 2008,
+      arrest: 1224,
+      no_arrest: 12086,
+      freq:{arrest:1224, no_arrest:12086},
+    }
+    ,{
+      crime: "HOMICIDE",
+      year: 2009,
+      arrest: 9000,
+      no_arrest: 1289,
+      freq:{arrest:9000, no_arrest:1286},
+    }
+    ]
+
+    var CRIMES = [
+    {
+      "crime": "ARSON",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 1170,
+        "arrest": 118
+      }
+    },
+    {
+      "crime": "ARSON",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 1093,
+        "arrest": 138
+      }
+    },
+    {
+      "crime": "ARSON",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 884,
+        "arrest": 128
+      }
+    },
+    {
+      "crime": "ARSON",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 458,
+        "arrest": 48
+      }
+    },
+    {
+      "crime": "ASSAULT",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 40230,
+        "arrest": 10622
+      }
+    },
+    {
+      "crime": "ASSAULT",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 34304,
+        "arrest": 11391
+      }
+    },
+    {
+      "crime": "ASSAULT",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 31537,
+        "arrest": 9692
+      }
+    },
+    {
+      "crime": "ASSAULT",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 15260,
+        "arrest": 5193
+      }
+    },
+    {
+      "crime": "BATTERY",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 120702,
+        "arrest": 31009
+      }
+    },
+    {
+      "crime": "BATTERY",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 104198,
+        "arrest": 32629
+      }
+    },
+    {
+      "crime": "BATTERY",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 97554,
+        "arrest": 27286
+      }
+    },
+    {
+      "crime": "BATTERY",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 46385,
+        "arrest": 14152
+      }
+    },
+    {
+      "crime": "BURGLARY",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 49300,
+        "arrest": 3105
+      }
+    },
+    {
+      "crime": "BURGLARY",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 50665,
+        "arrest": 2820
+      }
+    },
+    {
+      "crime": "BURGLARY",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 47012,
+        "arrest": 2658
+      }
+    },
+    {
+      "crime": "BURGLARY",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 25358,
+        "arrest": 1263
+      }
+    },
+    {
+      "crime": "CRIM SEXUAL ASSAULT",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 2481,
+        "arrest": 535
+      }
+    },
+    {
+      "crime": "CRIM SEXUAL ASSAULT",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 2350,
+        "arrest": 436
+      }
+    },
+    {
+      "crime": "CRIM SEXUAL ASSAULT",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 2028,
+        "arrest": 411
+      }
+    },
+    {
+      "crime": "CRIM SEXUAL ASSAULT",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 1257,
+        "arrest": 219
+      }
+    },
+    {
+      "crime": "CRIMINAL DAMAGE",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 98718,
+        "arrest": 6801
+      }
+    },
+    {
+      "crime": "CRIMINAL DAMAGE",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 88851,
+        "arrest": 6536
+      }
+    },
+    {
+      "crime": "CRIMINAL DAMAGE",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 72613,
+        "arrest": 5088
+      }
+    },
+    {
+      "crime": "CRIMINAL DAMAGE",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 34749,
+        "arrest": 2583
+      }
+    },
+    {
+      "crime": "CRIMINAL TRESPASS",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 11528,
+        "arrest": 13077
+      }
+    },
+    {
+      "crime": "CRIMINAL TRESPASS",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 5832,
+        "arrest": 15853
+      }
+    },
+    {
+      "crime": "CRIMINAL TRESPASS",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 5545,
+        "arrest": 12404
+      }
+    },
+    {
+      "crime": "CRIMINAL TRESPASS",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 2242,
+        "arrest": 6417
+      }
+    },
+    {
+      "crime": "DECEPTIVE PRACTICE",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 25242,
+        "arrest": 4340
+      }
+    },
+    {
+      "crime": "DECEPTIVE PRACTICE",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 22489,
+        "arrest": 4911
+      }
+    },
+    {
+      "crime": "DECEPTIVE PRACTICE",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 18826,
+        "arrest": 3979
+      }
+    },
+    {
+      "crime": "DECEPTIVE PRACTICE",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 10227,
+        "arrest": 2468
+      }
+    },
+    {
+      "crime": "GAMBLING",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 83,
+        "arrest": 2313
+      }
+    },
+    {
+      "crime": "GAMBLING",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 10,
+        "arrest": 1971
+      }
+    },
+    {
+      "crime": "GAMBLING",
+      "year": 2010,
+      "freq": {
+        "arrest": 1834
+      }
+    },
+    {
+      "crime": "GAMBLING",
+      "year": 2011,
+      "freq": {
+        "arrest": 736
+      }
+    },
+    {
+      "crime": "HOMICIDE",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 250,
+        "arrest": 263
+      }
+    },
+    {
+      "crime": "HOMICIDE",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 242,
+        "arrest": 218
+      }
+    },
+    {
+      "crime": "HOMICIDE",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 247,
+        "arrest": 191
+      }
+    },
+    {
+      "crime": "HOMICIDE",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 259,
+        "arrest": 178
+      }
+    },
+    {
+      "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 239,
+        "arrest": 920
+      }
+    },
+    {
+      "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 89,
+        "arrest": 1055
+      }
+    },
+    {
+      "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 191,
+        "arrest": 1336
+      }
+    },
+    {
+      "crime": "INTERFERENCE WITH PUBLIC OFFICER",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 66,
+        "arrest": 982
+      }
+    },
+    {
+      "crime": "INTIMIDATION",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 410,
+        "arrest": 112
+      }
+    },
+    {
+      "crime": "INTIMIDATION",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 384,
+        "arrest": 78
+      }
+    },
+    {
+      "crime": "INTIMIDATION",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 338,
+        "arrest": 44
+      }
+    },
+    {
+      "crime": "INTIMIDATION",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 129,
+        "arrest": 42
+      }
+    },
+    {
+      "crime": "KIDNAPPING",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 641,
+        "arrest": 76
+      }
+    },
+    {
+      "crime": "KIDNAPPING",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 528,
+        "arrest": 58
+      }
+    },
+    {
+      "crime": "KIDNAPPING",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 553,
+        "arrest": 51
+      }
+    },
+    {
+      "crime": "KIDNAPPING",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 235,
+        "arrest": 31
+      }
+    },
+    {
+      "crime": "LIQUOR LAW VIOLATION",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 51,
+        "arrest": 1772
+      }
+    },
+    {
+      "crime": "LIQUOR LAW VIOLATION",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 16,
+        "arrest": 1475
+      }
+    },
+    {
+      "crime": "LIQUOR LAW VIOLATION",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 2,
+        "arrest": 1424
+      }
+    },
+    {
+      "crime": "LIQUOR LAW VIOLATION",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 4,
+        "arrest": 615
+      }
+    },
+    {
+      "crime": "MOTOR VEHICLE THEFT",
+      "year": 2008,
+      "freq": {
+        "no_arrest": 34657,
+        "arrest": 3050
+      }
+    },
+    {
+      "crime": "MOTOR VEHICLE THEFT",
+      "year": 2009,
+      "freq": {
+        "no_arrest": 28345,
+        "arrest": 2597
+      }
+    },
+    {
+      "crime": "MOTOR VEHICLE THEFT",
+      "year": 2010,
+      "freq": {
+        "no_arrest": 33467,
+        "arrest": 1967
+      }
+    },
+    {
+      "crime": "MOTOR VEHICLE THEFT",
+      "year": 2011,
+      "freq": {
+        "no_arrest": 18443,
+        "arrest": 946
+      }
+    },
+  ];
+    var json = CRIMES;
+    // function dashboard(id, json){
+    var barColor = 'steelblue';
+    function segColor(c){ return {arrest:"#2eb82e",no_arrest:"#ff4d4d"}[c]; } // 41ab5d, e08214
+
+    // compute total for each crime.
+    json.forEach(function(d){d.total=+d.freq.arrest+d.freq.no_arrest;});
+
+    var years = [...new Set(json.map(d => d.year))];
+    var crimes = [...new Set(json.map(d => d.crime))];
+    var totals = [new Set(json.map(d => d.total))];
+
+    var options = d3.select("#year").selectAll("option")
+    .data(years)
+    .enter().append("option")
+    .text(d => d)
+
+    var hG={},    hGDim = {top: 60, right: 0, bottom: 70, left: 0};
+    hGDim.width = 500 - hGDim.left - hGDim.right,
+    hGDim.height = 300 - hGDim.top - hGDim.bottom;
+
+
+    // BAR CHART CONTAINER AND STATIC PARAMETERS
+    //create svg for histogram.
+    var hGsvg = d3.select(dashboard).append("svg")
+    .attr("width", hGDim.width + hGDim.left + hGDim.right)
+    .attr("height", hGDim.height + hGDim.top + hGDim.bottom).append("g")
+    .attr("transform", "translate(" + hGDim.left + "," + hGDim.top + ")");
+
+    // Create function for x-axis map.
+    var x = d3.scaleBand().rangeRound([0, hGDim.width], 0.1);
+    // Create function for y-axis map.
+    var y = d3.scaleLinear().range([hGDim.height, 0]);
+
+    // PIE CHART CONTAINER AND STATIC PARAMETERS
+    var pC ={},    pieDim ={width:250, height: 250};
+    pieDim.radius = Math.min(pieDim.width, pieDim.height) / 2;
+
+    // create svg for pie chart.
+    var piesvg = d3.select(dashboard).append("svg")
+    .attr("width", pieDim.width).attr("height", pieDim.height).append("g")
+    .attr("transform", "translate("+pieDim.width/2+","+pieDim.height/2+")");
+
+    // create function to draw the arcs of the pie slices.
+    var arc = d3.arc().outerRadius(pieDim.radius - 10).innerRadius(0);
+
+    // create a function to compute the pie slice angles.
+    var pie = d3.pie().sort(null).value(function(d) { return d.freq; });
+
+    // LEGEND CONTAINER AND STATIC PARAMETERS
+    // var leg = {};
+    //
+    // // create table for legend.
+    // var legend = d3.select(dashboard).append("table").attr('class','legend');
+
+
+    // function to handle histogram.
+    function barChart(data){
+      // create function for x-axis mapping.
+
+      // .domain(data.map(function(d) { return d[0]; }));
+      x.domain(data.map(function(d) { return d[0]; }));
+
+      // Add x-axis to the histogram svg.
+      hGsvg.append("g").attr("class", "x axis")
+      .attr("transform", "translate(0," + hGDim.height + ")")
+      .call(d3.axisBottom(x))
+      // .call(xAxis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.5em")
+      .attr("dy", "-.9em")
+      .attr("transform", function(d) {
+        return "rotate(-65)"
+      });
+
+      // .domain([0, d3.max(data, function(d) { return d[1]; })]);
+      y.domain([0, d3.max(data, function(d) { return d[1]; })]);
+
+      var bars = hGsvg.selectAll(".bar").data(data).enter()
+      .append("g").attr("class", "bar");
+      // .attr("width", x.bandwidth(9));
+
+      //create the rectangles.
+      bars.append("rect")
+      .attr("x", function(d) { return x(d[0]); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("width", x.bandwidth() - 20)
+      .attr("height", function(d) { return hGDim.height - y(d[1]); })
+      .attr('fill',barColor)
+      .on("mouseover",mouseover)// mouseover is defined below.
+      .on("mouseout",mouseout);// mouseout is defined below.
+
+      //Create the frequency labels above the rectangles.
+      bars.append("text").text(function(d){ return d3.format(",")(d[1])})
+      .attr("x", function(d) { return x(d[0])+(x.bandwidth() - 20)/2; })
+      .attr("y", function(d) { return y(d[1])-5; })
+      .attr("text-anchor", "middle");
+
+      function mouseover(d){  // utility function to be called on mouseover.
+        // filter for selected crime.
+        // call update functions of pie-chart and legend.
+        pC.update(getND(d, year));
+        leg.update(getND(d, year));
+      }
+
+      function mouseout(d){    // utility function to be called on mouseout.
+        // reset the pie-chart and legend.
+        // pC.update(tF);
+        // leg.update(tF);
+        pC.update(getTF(year));
+        leg.update(getTF(year));
+      }
+      // create function to update the bars. This will be used by pie-chart.
+      hG.update = function(nD, color){
+        // update the domain of the y-axis map to reflect change in frequencies.
+        y.domain([0, d3.max(nD, function(d) { return d[1]; })]);
+
+        // Attach the new data to the bars.
+        var bars = hGsvg.selectAll(".bar").data(nD);
+
+        // transition the height and color of rectangles.
+        bars.select("rect").transition().duration(500)
+        .attr("y", function(d) {return y(d[1]); })
+        .attr("height", function(d) { return hGDim.height - y(d[1]); })
+        .attr("fill", color);
+
+        // transition the frequency labels location and change value.
+        bars.select("text").transition().duration(500)
+        .text(function(d){ return d3.format(",")(d[1])})
+        .attr("y", function(d) {return y(d[1])-5; });
+      }
+      return hG;
+      // }
+      // barChart.update = update;
+    }
+
+    // function to handle pieChart.
+    function pieChart(pD){
+
+      // Draw the pie slices.
+      piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
+      .each(function(d) { this._current = d; })
+      .style("fill", function(d) { return segColor(d.data.type); })
+      .on("mouseover",mouseover).on("mouseout",mouseout);
+
+      // create function to update pie-chart. This will be used by histogram.
+      pC.update = function(nD){
+        piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
+        .attrTween("d", arcTween);
+      }
+      // Utility function to be called on mouseover a pie slice.
+      function mouseover(d){
+        // call the update function of histogram with new data.
+        getHGOverUpdate(d, year);
+
+      }
+      //Utility function to be called on mouseout a pie slice.
+      function mouseout(d){
+        // call the update function of histogram with all data.
+        getHGOutUpdate(d, year, barColor);
+        // hG.update(json.map(function(v){
+        //   return [v.crime,v.total];}), barColor);
+      };
+
+      // Animating the pie-slice requiring a custom function which specifies
+      // how the intermediate paths should be drawn.
+      function arcTween(a) {
+        var i = d3.interpolate(this._current, a);
+        this._current = i(0);
+        return function(t) { return arc(i(t));    };
+      }
+      return pC;
+    }
+
+    // function to handle legend.
+    function legend(lD){
+
+      // Filter according to year
+      // var lDat = lD.filter(f => f.year == year);
+      var leg = {};
+
+      // create table for legend.
+      var legend = d3.select(dashboard).append("table").attr('class','legend');
+
+      // create one row per segment.
+      var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
+
+      // create the first column for each segment.
+      tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
+      .attr("width", '16').attr("height", '16')
+      .attr("fill",function(d){ return segColor(d.type); });
+
+      // create the second column for each segment.
+      tr.append("td").text(function(d){ return d.type;});
+
+      // create the third column for each segment.
+      tr.append("td").attr("class",'legendFreq')
+      .text(function(d){ return d3.format(",")(d.freq);});
+
+      // create the fourth column for each segment.
+      tr.append("td").attr("class",'legendPerc')
+      .text(function(d){ return getLegend(d,lD);});
+
+      // Utility function to be used to update the legend.
+      // leg.update = function(nD){
+      // var nD = getND(d, year);
+      // console.log(nD);
+      leg.update = function(nD){
+
+        // update the data attached to the row elements.
+        var l = legend.select("tbody").selectAll("tr").data(nD);
+
+        // update the frequencies.
+        l.select(".legendFreq").text(function(d){ return d3.format(",")(d.freq);});
+
+        // update the percentage column.
+        l.select(".legendPerc").text(function(d){ return getLegend(d,nD);});
+      }
+
+      function getLegend(d,aD){ // Utility function to compute percentage.
+        return d3.format("%")(d.freq/d3.sum(aD.map(function(v){ return v.freq; })));
+      }
+
+      return leg;
+    }
+
+    // function to update
+    function getHGOverUpdate(d, year) {
+      var fjson = json.filter(f=> f.year == year);
+      hG.update(fjson.map(function(v){
+        return [v.crime,v.freq[d.data.type]];}),segColor(d.data.type));
+      }
+
+      // function to update
+      function getHGOutUpdate(d, year, barColor) {
+        var fjson = json.filter(f=> f.year == year);
+        hG.update(fjson.map(function(v){
+          return [v.crime,v.total];}), barColor);
+        }
+        // }
+
+        // function to update
+        function getND(d, year) {
+          var fjson = json.filter(f=> f.year == year);
+          var st = fjson.filter(function(s){ return s.crime == d[0];})[0];
+          // console.log(d[0]);
+          var nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
+          return nD;
+        }
+
+        // function to update tF
+        function getTF(year) {
+          var fjson = json.filter(f=> f.year == year);
+          // calculate total frequency by segment for all crime.
+          var tF = ['arrest','no_arrest'].map(function(d){
+            return {type:d, freq: d3.sum(fjson.map(function(t){ return t.freq[d];}))};
+          });
+          return tF;
+        };
+
+        // function to update sF
+        function getSF(year) {
+          var fjson = json.filter(f=> f.year == year);
+          // calculate total frequency by crime for all segment.
+          var sF = fjson.map(function(d){return [d.crime,d.total];});
+          return sF
+        }
+
+        // calculate total frequency by segment for all crime.
+        // var tF = ['arrest','no_arrest'].map(function(d){
+        //   return {type:d, freq: d3.sum(json.map(function(t){ return t.freq[d];}))};
+        // });
+        // calculate total frequency by crime for all segment.
+        // var sF = fjson.map(function(d){return [d.crime,d.total];});
+        //
+        // var hG = barChart(sF), // create the histogram.
+        // pC = pieChart(tF), // create the pie-chart.
+        // leg = legend(tF);  // create the legend.
+
+        // Initialize
+        var fjson = json.filter(f=> f.year == year);
+        var year = 2009;
+        // var hG = barChart(getSF(year)), // create the histogram.
+        // pC = pieChart(getTF(year)), // create the pie-chart.
+        // leg = legend(getTF(year));  // create the legend.
+        // create graphs
+        var hG = barChart(getSF(year)), // create the histogram.
+        pC = pieChart(getTF(year)), // create the pie-chart.
+        leg = legend(getTF(year));  // create the legend.
+        // dashboard('#dashboard',CRIMES);
+
+
+        // Change
+        var slider = d3.select("#year")
+        .style("border-radius", "1px")
+        .on('change', function() {
+          var hG = barChart(getSF(this.value)); // create the histogram.
+          pC = pieChart(getTF(this.value)); // create the pie-chart.
+          leg = legend(getTF(this.value));  // create the legend.
+          // var nD = getND(fjson, year);
+          // hG.update(nD, color);
+          // dashboard('#dashboard',CRIMES);
+        });
+        //}
+
+        // dashboard('#dashboard',CRIMES);
+
+
+      </script>
