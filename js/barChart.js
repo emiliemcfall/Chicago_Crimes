@@ -1,156 +1,157 @@
-var width = document.getElementById('vis')
-.clientWidth;
-var height = document.getElementById('vis')
-.clientHeight;
+d3.csv("crimes-aggregated.csv").then(d => chart(d));
 
-var margin = {
-  top: 10,
-  bottom: 225,
-  left: 70,
-  right: 20
+function chart(csv) {
+
+	csv.forEach(function(d) {
+		d.crime = d.crime;
+		d.value = +d.arrest + +d.no_arrest;
+    d.year = +d.year;
+		return d;
+	})
+
+  var years = [...new Set(csv.map(d => d.year))];
+  var crimes = [...new Set(csv.map(d => d.crime))];
+  var values = [new Set(csv.map(d => d.value))];
+
+	// // Define the div for the tooltip
+	var div = d3.select("body").append("div")
+	    .attr("class", "tooltip")
+	    .style("opacity", 0);
+
+
+	var svg = d3.select("#chart"),
+		margin = {top: 25, bottom: -50, left: 70, right: 25},
+		width = +svg.attr("width") - margin.left - margin.right,
+		height = +svg.attr("height") - margin.top - margin.bottom;
+
+	var x = d3.scaleBand()
+		.range([margin.left, width - margin.right])
+		.padding(0.1)
+		.paddingOuter(0.2)
+
+	var y = d3.scaleLinear()
+		.range([height - margin.bottom, margin.top])
+
+  // var colour_scale = d3.scaleQuantile()
+  // // // .range(["#ffffe5", "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014", "#cc4c02", "#993404", "#662506"]);
+  //   .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598",
+  //   "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
+
+	var xAxis = g => g
+		.attr("transform", "translate(0," + (height - margin.bottom) + ")")
+		.call(d3.axisBottom(x).tickSizeOuter(0))
+
+	var yAxis = g => g
+		.attr("transform", "translate(" + margin.left + ",0)")
+		.call(d3.axisLeft(y))
+
+	svg.append("g")
+		.attr("class", "x-axis")
+
+	svg.append("g")
+		.attr("class", "y-axis")
+
+	update(slider.value(), 0)
+
+	function update(year, speed) {
+
+		var data = csv.filter(f => f.year == year)
+
+		y.domain([0, d3.max(data, d => d.value)]).nice()
+    // colour_scale.domain([0, d3.max(data, d => d.value)])
+    // console.log(d3.max(data, d => d.value));
+
+		svg.selectAll(".y-axis").transition().duration(speed)
+			.call(yAxis);
+
+		data.sort(d3.select("#sort").property("checked")
+			? (a, b) => b.value - a.value
+			: (a, b) => crimes.indexOf(a.crime) - crimes.indexOf(b.crime))
+
+		x.domain(data.map(d => d.crime))
+
+		svg.selectAll(".x-axis").transition().duration(speed)
+			.call(xAxis)
+      .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.5em")
+        .attr("dy", "-.9em")
+        .attr("transform", function(d) {
+            return "rotate(-65)"
+          });
+
+		var bar = svg.selectAll(".bar")
+			.data(data, d => d.crime)
+
+		bar.exit().remove();
+
+		bar.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", "steelblue")
+      // .attr('hover', 'red')
+			.attr("width", x.bandwidth())
+			.merge(bar)
+      .on("mouseenter", function(d) {
+        // d3.selectAll('.value')
+        //   .attr('opacity', 0.6)
+        d3.select(this)
+          .attr('opacity', 0.6)
+        div.transition()
+          .duration(200)
+          .style("opacity", .9);
+        div.html('#Crimes: ' + (d.value))
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+        })
+      .on('mouseleave', function () {
+        d3.select(this)
+          .attr('opacity', 1)
+        })
+      // .on("mouseout", function(d) {
+      //   div.transition()
+      //     .duration(500)
+      //     .style("opacity", 0);
+      // })
+        // .attr('fill', d => colour_scale(d.value))
+		.transition().duration(speed)
+			.attr("x", d => x(d.crime))
+			.attr("y", d => y(d.value))
+			.attr("height", d => y(0) - y(d.value))
+
+	}
+	chart.update = update;
 }
 
-var svg = d3.select('#vis')
-.append('svg')
-.attr('width', width)
-.attr('height', height)
-.append('g')
-.attr('transform', 'translate(' + margin.left + ',' + margin.right + ')');
 
-width = width - margin.left - margin.right;
-height = height - margin.top - margin.bottom;
+var years = [2008,2009,2010,2011]
 
-//var data = {};
-
-var sortDescending = false; //if true, bars are sorted by height in descending order
-
-var x_scale = d3.scaleBand()
-.rangeRound([0, width])
-.padding(0.1);
-
-var y_scale = d3.scaleLinear()
-.range([height, 0]);
-
-var colour_scale = d3.scaleQuantile()
-// .range(["#ffffe5", "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014", "#cc4c02", "#993404", "#662506"]);
-.range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598",
-"#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
-
-var y_axis = d3.axisLeft(y_scale);
-var x_axis = d3.axisBottom(x_scale);
-
-svg.append('g')
-  .attr('class', 'x axis')
-  .attr("transform", 'translate(0,' + height + ')');
-
-svg.append('g')
-.attr('class', 'y axis');
-
-d3.select("label")
-  .select("input")
-
-d3.csv("crimes-aggregated.csv", function(error, data) {
-  // Filter according to year
-  //var csv_data = data
-  function draw(year, speed) {
-    //[year];
-    let csv_data = data.filter(function(d) {
-      return ( d['year'] == year );
-    });
-
-    if (sortDescending) {
-      csv_data.sort(function(a, b){ var sortKey = 'value'; return b[sortKey] - a[sortKey]; });
-    };
-
-    var t = d3.transition()
-    .duration(speed);
-
-    var crime_types = csv_data.map(function(d) {
-      return d.crime_type;
-    });
-    //var crime_types = csv_data.crime_type;
-    x_scale.domain(crime_types);
-
-    var max_value = d3.max(csv_data, function(d) {
-      return +d.value;
-    });
-
-    // console.log(max_value);
-
-    y_scale.domain([0, max_value]);
-    colour_scale.domain([0, max_value]);
-
-    var bars = svg.selectAll('.bar')
-    .data(csv_data)
-
-    bars
-    .exit()
-    .remove();
-
-    var new_bars = bars
-    .enter()
-    .append('rect')
-    .attr('class', 'bar')
-    .attr('x', function(d) {
-      return x_scale(d.crime_type);
-    })
-    .attr('width', x_scale.bandwidth())
-    .attr('y', height)
-    .attr('height', 0)
-
-    new_bars.merge(bars)
-    .transition(t)
-    .attr('y', function(d) {
-      return y_scale(+d.value);
-    })
-    .attr('height', function(d) {
-      return height - y_scale(+d.value)
-    })
-    .attr('fill', function(d) {
-      return colour_scale(+d.value);
-    })
-
-    svg.select('.x.axis')
-    .call(x_axis)
-    .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.5em")
-      .attr("dy", "-.9em")
-      .attr("transform", function(d) {
-          return "rotate(-65)"
-        });
-
-    svg.select('.y.axis')
-    .transition(t)
-    .call(y_axis);
-
-  };
-
-  // d3.select("#sort").on("change", sort);
-  //   data.sort(function(a, b) {
-  //     return console.log(a["value"]-b["value"]);
-  //   });
-
-  // Initiate
-  var speed = 1500
-  draw('2011', speed*1.25, false);
-  //
-  var slider = d3.select('#year');
-
-  slider.on('change', function() {
-    draw(this.value, speed);
+var slider = d3.sliderHorizontal()
+  .min(d3.min(years))
+  .max(d3.max(years))
+  .step(1)
+  .width(500)
+  .tickFormat(d3.format(''))
+  .tickValues(years)
+  .on('onchange', val => {
+    d3.select("p#value").text(val);
+		chart.update(val, 750)
   });
 
-  var checkbox = d3.select('#sort');
-  checkbox.on('click', function () {
-    sortDescending = this.value;
-    draw(year.value, speed);
-  });
 
-  //console.log(year.value);
+var group = d3.select("div#slider").append("svg")
+	.attr("width", 650)
+	.attr("height", 100)
+	.append("g")
+	.attr("transform", "translate(30,30)");
 
-  ;
+group.call(slider);
+
+d3.select("p#value").text(slider.value());
+d3.select("a#setValue").on("click", () => { slider.value(2008); d3.event.preventDefault(); });
 
 
-
-});
+var checkbox = d3.select("#sort")
+	.style("margin-left", "0%")
+	.on("click", function() {
+		chart.update(slider.value(), 750)
+	})

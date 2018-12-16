@@ -21,6 +21,10 @@
   rel="stylesheet"
   href="./css/map.css"
   >
+  <link
+  rel="stylesheet"
+  href="./css/dendogram.css"
+  >
   <style>
   body {
     position: relative;
@@ -30,9 +34,11 @@
     width: 80vw;
     height: 80vh;
   }
+  #dendogram {
+    height: 100%;
+    margin: 0;
+  }
   #chart {
-    /* width: 80vw;
-    height: 80vh; */
     height: 90%;
     margin: 0;
   }
@@ -62,6 +68,18 @@
   .barchart {
     height: 300px;
   }
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
   </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -82,8 +100,7 @@
       </li>
     </ul>
   </nav>
-
-  <div
+<div
   id="introduction"
   class="container-fluid section-introduction"
   >
@@ -110,20 +127,36 @@ class="container-fluid bg-success section"
 </p>
 </div>
 <div
+id="section-bla"
+class="container-fluid section"
+>
+<h1>Data Analysis</h1>
+<p>
+  Try to scroll this section and look at the navigation bar while
+  scrolling! Try to scroll this section and look at the navigation bar
+  while scrolling!
+</p>
+<p>
+  Try to scroll this section and look at the navigation bar while
+  scrolling! Try to scroll this section and look at the navigation bar
+  while scrolling!
+</p>
+<svg id="dendogram" class ="dendogram" width="850" height="850"></svg>
+<!-- <div id="map" class="map"></div> -->
+</div>
+<div
   id="section2"
   class="container section"
 >
 <h1>Section 2</h1>
-<!-- <p>
-  Try to scroll this section and look at the navigation bar while
-  scrolling! Try to scroll this section and look at the navigation bar
-  while scrolling!
-</p> -->
-<form>
-  <label for="year">Choose year: </label>
-  <input type="range" min=2008 max=2011 step=1 id="year" value=2011 oninput="selected_year.value = year.value">
-  <output name="selected_year" id="selected_year">2011</output>
-</form>
+<div class="row align-items-center">
+  <div class="col-sm-2">
+    <p id="value"></p>
+  </div>
+  <div class="col-sm">
+    <div id="slider"></div>
+  </div>
+</div>
 <form>
   <input type="checkbox" id="sort" display='block'>Toggle sort
 </form>
@@ -134,12 +167,12 @@ class="container-fluid bg-success section"
   class="container-fluid bg-secondary section-map"
 >
 <h1>Section 3</h1>
+<p>
+  Try to scroll this section and look at the navigation bar while
+  scrolling! Try to scroll this section and look at the navigation bar
+  while scrolling!
+</p>
 <nav id='menu'></nav>
-<!-- <div id='income-legend' class='legend'>
-  <h4>Median Household Income</h4>
-  <div><span style='background-color: #723122'></span>25,000,000</div>
-  <div><span style='background-color: #8B4225'></span>10,000,000</div>
-</div> -->
 <div id="map" class="map"></div>
 </div>
 
@@ -150,7 +183,9 @@ class="container-fluid bg-success section"
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/3.0.4/d3-queue.min.js"></script>
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+<script src="https://unpkg.com/d3-simple-slider/build/d3-simple-slider.js"></script>
 <script src="js/chicagoMap.js"></script>
-<script src="js/barPieChart.js"></script>
+<script src="js/barChart.js"></script>
+<script src="js/dendogram.js"></script>
 </body>
 </html>
