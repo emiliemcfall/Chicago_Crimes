@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
 <style type="text/css">
 
 /* Legend Font Style */
@@ -75,7 +75,8 @@ var svg = d3.select("body")
 .attr("tranform", "translate(0" + margin.left + "," + margin.top + ")");
 
 // Load in my states data!
-d3.csv("./data/income-district.csv", function(data) {
+d3.csv("./data/income-district.csv").then(function(data) {
+
 	var dataArray = [];
 	for (var d = 0; d < data.length; d++) {
 		dataArray.push(parseFloat(data[d].income))
@@ -86,7 +87,7 @@ d3.csv("./data/income-district.csv", function(data) {
 	console.log(ramp)
 
   // Load GeoJSON data and merge with states data
-  d3.json("./police-borders.json", function(json) {
+  d3.json("./police-borders.json").then(function(json) {
 
     // Loop through each state data value in the .csv file
     for (var i = 0; i < data.length; i++) {
