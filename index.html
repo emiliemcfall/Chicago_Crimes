@@ -21,10 +21,10 @@
   rel="stylesheet"
   href="./css/map.css"
   >
-  <link
+  <!-- <link
   rel="stylesheet"
   href="./css/dendogram.css"
-  >
+  > -->
   <style>
   body {
     position: relative;
@@ -34,17 +34,19 @@
     width: 80vw;
     height: 80vh;
   }
-  #dendogram {
+  /* #dendogram {
     height: 100%;
     margin: 0;
-  }
+  } */
   #chart {
     height: 90%;
     margin: 0;
+    /* height: 400px; */
   }
   #subchart {
     height: 90%;
     margin: 0;
+    /* height: 400px; */
   }
   #stylized input{
     display: block;
@@ -153,16 +155,12 @@ class="container-fluid section"
   class="container section"
 >
 <h1>Section 2</h1>
-<div class="row align-items-center">
-    <p id="value"></p>
-  <!-- <div class="col-sm"> -->
-    <div id="slider"></div>
-  <!-- </div> -->
-</div>
+<div id="slider"></div>
 <form>
   <input type="checkbox" id="sort" display='block'>Toggle sort
 </form>
-<svg id="chart" width="750" height="300"></svg>
+<svg id="subchart" width="750" height="300"></svg>
+<!-- <svg id="subchart" width="750" height="300"></svg> -->
 </div>
 <div
   id="section3"
@@ -187,7 +185,8 @@ class="container-fluid section"
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
 <script src="https://unpkg.com/d3-simple-slider/build/d3-simple-slider.js"></script>
 <script src="js/chicagoMap.js"></script>
-<script src="js/barChart.js"></script>
-<script src="js/dendogram.js"></script>
+<!-- <script src="js/barChart.js"></script> -->
+<script src="js/subBarChart.js"></script>
+<!-- <script src="js/dendogram.js"></script> -->
 </body>
 </html>
