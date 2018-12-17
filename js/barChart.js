@@ -1,4 +1,4 @@
-// Load data files
+// Load data file
 d3.csv("crimes-aggregated.csv").then(d => chart(d));
 // d3.csv('subcrimes.csv').then(d => subchart(d));
 
@@ -10,7 +10,7 @@ function chart(csv) {
     d.year = +d.year;
 		return d;
 	})
-
+	
   var years = [...new Set(csv.map(d => d.year))];
   var crimes = [...new Set(csv.map(d => d.crime))];
   var values = [new Set(csv.map(d => d.value))];
@@ -19,7 +19,6 @@ function chart(csv) {
 	var div = d3.select("body").append("div")
 	    .attr("class", "tooltip")
 	    .style("opacity", 0);
-
 
 	var svg = d3.select("#chart"),
 		margin = {top: 25, bottom: -50, left: 70, right: 25},
@@ -90,7 +89,6 @@ function chart(csv) {
 		bar.enter().append("rect")
 			.attr("class", "bar")
 			.attr("fill", "steelblue")
-      // .attr('hover', 'red')
 			.attr("width", x.bandwidth())
 			.merge(bar)
       .on("mouseenter", function(d) {
@@ -109,12 +107,6 @@ function chart(csv) {
         d3.select(this)
           .attr('opacity', 1)
         })
-      // .on("mouseout", function(d) {
-      //   div.transition()
-      //     .duration(500)
-      //     .style("opacity", 0);
-      // })
-        // .attr('fill', d => colour_scale(d.value))
 		.transition().duration(speed)
 			.attr("x", d => x(d.crime))
 			.attr("y", d => y(d.value))
@@ -126,6 +118,7 @@ function chart(csv) {
 
 var years = [2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018]
 
+// Update charts when sliding
 var slider = d3.sliderHorizontal()
   .min(d3.min(years))
   .max(d3.max(years))
@@ -149,6 +142,7 @@ group.call(slider);
 d3.select("p#value").text(slider.value());
 d3.select("a#setValue").on("click", () => { slider.value(2008); d3.event.preventDefault(); });
 
+// Sort charts when toggle
 var checkbox = d3.select("#sort")
 	.style("margin-left", "0%")
 	.on("click", function() {

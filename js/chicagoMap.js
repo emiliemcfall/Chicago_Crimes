@@ -6,7 +6,7 @@ mapboxgl.accessToken =
 // Initiate map
 var map = new mapboxgl.Map({
   container: "map", // container id
-  style: "mapbox://styles/mapbox/dark-v9", // stylesheet location
+  style: "mapbox://styles/mapbox/light-v9", // stylesheet location
   center: [-87.6298, 41.8781], // starting position [lng, lat]
   zoom: 10 // starting zoom
 });

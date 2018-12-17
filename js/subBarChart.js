@@ -1,7 +1,6 @@
 // Load data files
-d3.csv("subcrimes-test.csv").then(d => chart(d));
+d3.csv("subcrimes.csv").then(d => chart(d));
 // d3.csv('subcrimes.csv').then(d => subchart(d));
-
 
 function chart(csv) {
 
@@ -10,22 +9,20 @@ function chart(csv) {
     d.subcrime = d.subcrime;
 		d.value = +d.total; //+ +d.no_arrest;
     d.year = +d.year;
-    d.arrest = d.arrest;
+    d.arrest = +d.arrest;
+    d.no_arrest = +d.no_arrest;
 		return d;
 	})
 
   var years = [...new Set(csv.map(d => d.year))];
-  var crimes = [...new Set(csv.map(d => d.crime))];
-  var subcrimes = [...new Set(csv.map(d => d.subcrime))];
-  var values = [new Set(csv.map(d => d.value))];
-  var keys = ['arrest', 'no_arrest']
+  var keys = ['arrest','no_arrest']
 
 	// // Define the div for the tooltip
 	var div = d3.select("body").append("div")
 	    .attr("class", "tooltip")
 	    .style("opacity", 0);
 
-	var svg = d3.select("#subchart"),
+	var svg = d3.select("#chart"),
 		margin = {top: 25, bottom: -50, left: 70, right: 25},
 		width = +svg.attr("width") - margin.left - margin.right,
 		height = +svg.attr("height") - margin.top - margin.bottom;
@@ -37,6 +34,9 @@ function chart(csv) {
 
 	var y = d3.scaleLinear()
 		.range([height - margin.bottom, margin.top])
+
+  var z = d3.scaleOrdinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
   // var colour_scale = d3.scaleQuantile()
   // // // .range(["#ffffe5", "#fff7bc", "#fee391", "#fec44f", "#fe9929", "#ec7014", "#cc4c02", "#993404", "#662506"]);
@@ -56,6 +56,7 @@ function chart(csv) {
 
 	svg.append("g")
 		.attr("class", "y-axis")
+  //console.log(d3.stack().keys(keys)(data));
 
 	update(slider.value(), 'ARSON', 0)
 
@@ -64,18 +65,16 @@ function chart(csv) {
 		var dat = csv.filter(f => f.year == year)
     var data = dat.filter(f => f.crime == crime)
 
+    x.domain(data.map(d => d.subcrime))
 		y.domain([0, d3.max(data, d => d.value)]).nice()
+    z.domain(keys);
     // colour_scale.domain([0, d3.max(data, d => d.value)])
     // console.log(d3.max(data, d => d.value));
 
-		svg.selectAll(".y-axis").transition().duration(speed)
-			.call(yAxis);
-
-		data.sort(d3.select("#sort").property("checked")
-			? (a, b) => b.value - a.value
-			: (a, b) => crimes.indexOf(a.subcrime) - crimes.indexOf(b.subcrime))
-
-		x.domain(data.map(d => d.subcrime))
+		// data.sort(d3.select("#sort").property("checked")
+		// 	? (a, b) => b.value - a.value
+		// 	: (a, b) => crimes.indexOf(a.subcrime) - crimes.indexOf(b.subcrime))
+    
 
 		svg.selectAll(".x-axis").transition().duration(speed)
 			.call(xAxis)
@@ -87,29 +86,17 @@ function chart(csv) {
             return "rotate(-65)"
           });
 
+    svg.selectAll(".y-axis").transition().duration(speed)
+			.call(yAxis);
+
 		var bar = svg.selectAll(".bar")
-			.data(d3.stack().keys(keys)(data), d => d.subcrime)
-
-      // g.append("g")
-      //   .selectAll("g")
-      //   .data(d3.stack().keys(keys)(data))
-      //   .enter().append("g")
-      //     .attr("fill", function(d) { return z(d.key); })
-      //   .selectAll("rect")
-      //   .data(function(d) { return d; })
-      //   .enter().append("rect")
-      //     .attr("x", function(d,i) { return x(i); })
-      //     .attr("y", function(d) { return y(d[1]); })
-      //     .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-      //     .attr("width", x.bandwidth());
-      //
-
+			.data(data, d => d.subcrime)
 
 		bar.exit().remove();
 
 		bar.enter().append("rect")
 			.attr("class", "bar")
-			.attr("fill", "steelblue")
+			.attr("fill", 'steelblue') //function(d) { return z(d.key); }
       // .attr('hover', 'red')
 			.attr("width", x.bandwidth())
 			.merge(bar)
@@ -144,7 +131,6 @@ function chart(csv) {
 	chart.update = update;
 }
 
-
 var years = [2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018]
 
 var slider = d3.sliderHorizontal()
@@ -170,8 +156,8 @@ group.call(slider);
 d3.select("p#value").text(slider.value());
 d3.select("a#setValue").on("click", () => { slider.value(2008); d3.event.preventDefault(); });
 
-var checkbox = d3.select("#sort")
-	.style("margin-left", "0%")
-	.on("click", function() {
-		chart.update(slider.value(), 'ARSON', 750)
-	})
+// var checkbox = d3.select("#sort")
+// 	.style("margin-left", "0%")
+// 	.on("click", function() {
+// 		chart.update(slider.value(), 'ARSON', 750)
+// 	})
