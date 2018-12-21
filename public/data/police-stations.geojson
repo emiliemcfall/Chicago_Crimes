@@ -1,0 +1,350 @@
+{
+   "type": "FeatureCollection",
+   "features": [
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.62735617,41.85837259 ]
+    },
+    "properties": {
+    "District":"1",
+    "District Name":"Central",
+    "Address":"1718 S State St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60616
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.63056018,41.80181109 ]
+    },
+    "properties": {
+    "District":"2",
+    "District Name":"Wentworth",
+    "Address":"5101 S Wentworth Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60609
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.60574786,41.76643089 ]
+    },
+    "properties": {
+    "District":"3",
+    "District Name":"Grand Crossing",
+    "Address":"7040 S Cottage Grove Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60637
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.56834912,41.70793329 ]
+    },
+    "properties": {
+    "District":"4",
+    "District Name":"South Chicago",
+    "Address":"2255 E 103rd St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60617
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.60450587,41.69272336 ]
+    },
+    "properties": {
+    "District":"5",
+    "District Name":"Calumet",
+    "Address":"727 E 111th St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60628
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.64422891,41.75213684 ]
+    },
+    "properties": {
+    "District":"6",
+    "District Name":"Gresham",
+    "Address":"7808 S Halsted St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60620
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.66088702,41.77963154 ]
+    },
+    "properties": {
+    "District":"7",
+    "District Name":"Englewood",
+    "Address":"1438 W 63rd St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60636
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.70886382,41.77898719 ]
+    },
+    "properties": {
+    "District":"8",
+    "District Name":"Chicago Lawn",
+    "Address":"3420 W 63rd St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60629
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.64640771,41.83739443 ]
+    },
+    "properties": {
+    "District":"9",
+    "District Name":"Deering",
+    "Address":"3120 S Halsted St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60608
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.70838196,41.85668453 ]
+    },
+    "properties": {
+    "District":"10",
+    "District Name":"Ogden",
+    "Address":"3315 W Ogden Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60623
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.70548813,41.87358229 ]
+    },
+    "properties": {
+    "District":"11",
+    "District Name":"Harrison",
+    "Address":"3151 W Harrison St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60612
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.65697251,41.86297662 ]
+    },
+    "properties": {
+    "District":"12",
+    "District Name":"Near West",
+    "Address":"1412 S Blue Island Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60608
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.69745182,41.92110332 ]
+    },
+    "properties": {
+    "District":"14",
+    "District Name":"Shakespeare",
+    "Address":"2150 N California Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60647
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.76819989,41.88008346 ]
+    },
+    "properties": {
+    "District":"15",
+    "District Name":"Austin",
+    "Address":"5701 W Madison St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60644
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.76614884,41.97409445 ]
+    },
+    "properties": {
+    "District":"16",
+    "District Name":"Jefferson Park",
+    "Address":"5151 N Milwaukee Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60630
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.72811456,41.96605342 ]
+    },
+    "properties": {
+    "District":"17",
+    "District Name":"Albany Park",
+    "Address":"4650 N Pulaski Rd",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60630
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.64335214,41.90324165 ]
+    },
+    "properties": {
+    "District":"18",
+    "District Name":"Near North",
+    "Address":"1160 N Larrabee St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60610
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.65151202,41.94740046 ]
+    },
+    "properties": {
+    "District":"19",
+    "District Name":"Town Hall",
+    "Address":"850 W Addison St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60613
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.69284451,41.97954951 ]
+    },
+    "properties": {
+    "District":"20",
+    "District Name":"Lincoln",
+    "Address":"5400 N Lincoln Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60625
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.66852039,41.69143478 ]
+    },
+    "properties": {
+    "District":"22",
+    "District Name":"Morgan Park",
+    "Address":"1900 W Monterey Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60643
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.67132429,41.99976348 ]
+    },
+    "properties": {
+    "District":"24",
+    "District Name":"Rogers Park",
+    "Address":"6464 N Clark St",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60626
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.76557448,41.91860889 ]
+    },
+    "properties": {
+    "District":"25",
+    "District Name":"Grand Central",
+    "Address":"5555 W Grand Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60639
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -87.62339535,41.83070169 ]
+    },
+    "properties": {
+    "District":"Headquarters",
+    "District Name":"Headquarters",
+    "Address":"3510 S Michigan Ave",
+    "City":"Chicago",
+    "State":"IL",
+    "Zip":60653
+    }
+  }
+]
+}

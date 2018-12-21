@@ -1,0 +1,70 @@
+.bg-black {
+  background-color: #000;
+}
+
+.display-4 {
+  font-size: 3rem;
+}
+
+.section {
+  min-height: 100vh;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.section:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.section-introduction {
+  background-color: darkblue;
+  background-image: url("/img/chicago.jpg");
+}
+
+.section-analysis1 {
+  background-color: magenta;
+  background-image: url("/img/chicago-satellite.jpg");
+}
+
+.section-analysis2 {
+  background-color: darkgreen;
+  background-image: url("/img/chicago-crime.jpg");
+}
+
+.section-analysis3 {
+/*  background-color: darkgreen;
+  background-image: url("/img/chicago-satellite.jpg");*/
+  background-color: cyan;
+  /*color: white;*/
+}
+
+
+.section-analysis4 {
+  background-color: darkcyan;
+}
+
+.section-analysis5 {
+  background-color: red;
+  background-image: url("/img/chicago-crime.jpg");
+}
+
+.mapbox {
+  min-height: 400px;
+  width: 800px;
+  background-color: pink;
+}
+
+.chart {
+  height: 600px;
+}
+
+#theftTrends {
+  /* background-color: red */
+}
