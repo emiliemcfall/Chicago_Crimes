@@ -1,3 +1,6 @@
+// Inspiration for the statistical implementation of the boxplots is taken from http://bl.ocks.org/ulyngs/e1fd5652762df0be26eb4f9b43a364a7
+// Editted by Shruti Goli, Emilie McFall, and Pernille Samsøe
+
 (function () {
     //initialize the canvas dimensions
     var margin = { top: 10, right: 10, bottom: 20, left: 10 },
