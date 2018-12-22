@@ -4,27 +4,20 @@ fill: #fff;
 .axis path,
 .axis line {
   fill: none;
-	stroke: white;
-	font-color: white;
+	stroke: #AFBABF;
 	shape-rendering: crispEdges;
 	}
 .axis text {
 	font-family:  SourceSansPro-Bold;
 	font-size: 14px;
-	color: white;
-	font-color: white;
-	fill: white;
+	fill: #AFBABF;
 	}
 
 .x.axis path {
   display: none;
-  color: white;
-  font-color: white;
 }
 .y.axis path{
   display: none;
-  font-color: white;
-  color: white;
   }
 
 .line {
@@ -56,7 +49,6 @@ fill: #fff;
 .legend {
 	font-family: SourceSansPro-Light;
 	font-size: 10pt;
-	font-color: white;
 	margin-bottom:0px;
 	fill: #231F20;
 	}

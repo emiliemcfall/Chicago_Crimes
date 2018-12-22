@@ -37,34 +37,20 @@
   background-color: darkgreen;
   background-image: url("/img/chicago-crime.jpg");
 }
-
-.section-analysis3 {
-/*  background-color: darkgreen;
-  background-image: url("/img/chicago-satellite.jpg");*/
-  background-color: cyan;
-  /*color: white;*/
-}
-
-
 .section-analysis4 {
-  background-color: darkcyan;
+  background-color: darkgreen;
 }
 
-.section-analysis5 {
+.section-map {
   background-color: red;
-  background-image: url("/img/chicago-crime.jpg");
 }
 
-.mapbox {
+.map {
   min-height: 400px;
   width: 800px;
   background-color: pink;
 }
 
 .chart {
-  height: 600px;
-}
-
-#theftTrends {
-  /* background-color: red */
+  height: 500px;
 }

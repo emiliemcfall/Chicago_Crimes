@@ -1,1 +1,43 @@
-This attachment was removed because it contains data that could pose a security risk.
+.nofill
+{
+    fill: 'darkgreen';
+    opacity: 0;
+}
+
+.verticalGrid
+{
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: black;
+    opacity: 0.1;
+    stroke-width: 1px;
+}
+
+.whisker
+{
+    stroke-width: 1px;
+}
+
+.median
+{
+    stroke: black;
+    stroke-width: 1.3px;
+}
+
+.categoryLabel
+{
+    font-size: 0.75em;
+    fill: 'black';
+}
+
+div.tooltip
+{
+    position: relative;
+    text-align: center;
+    padding: 3px;
+    font-size: 11px;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}

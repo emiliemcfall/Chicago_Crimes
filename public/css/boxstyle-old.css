@@ -1,0 +1,102 @@
+.canvas
+{
+    fill: 'none';
+    opacity: 0;
+}
+
+.verticalGrid
+{
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: black;
+    opacity: 0.1;
+    stroke-width: 1px;
+}
+
+/* .title
+{
+    text-anchor: middle;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+} */
+
+.whisker
+{
+    stroke-width: 1px;
+}
+
+.median
+{
+    stroke: black;
+    stroke-width: 1.3px;
+}
+
+/* .box
+{
+    opacity: 0.6;
+} */
+
+circle
+{
+    stroke: none;
+    /* shape-rendering: crispEdges; */
+}
+
+.categoryLabel
+{
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    /* font-size: 0.75em; */
+}
+
+.outlier
+{
+    opacity: 1;
+}
+
+.point
+{
+    opacity: 0.5;
+}
+
+.axis path
+{
+    fill: none;
+    stroke: black;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.axis line
+{
+    fill: none;
+    stroke: black;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.axis text
+{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10px;
+}
+
+.menuchoice {
+	font-family: SourceSansPro-Light;
+	font-size: 16pt;
+	margin-bottom:50px;
+	fill: #231F20;
+	}
+
+div.tooltip
+{
+    position: absolute;
+    text-align: center;
+    padding: 3px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
